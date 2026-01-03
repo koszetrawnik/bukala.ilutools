@@ -151,8 +151,18 @@ export const insertPageNumbers = (
     // Set justification
     textRange.paragraphAttributes.justification = justification;
 
-    // Position the text frame
+    // Position the text frame: align its bounding-box center to target (x,y)
     textFrame.position = [x, y];
+    try {
+      const bounds = textFrame.visibleBounds; // [x1, y1, x2, y2]
+      const centerX = (bounds[0] + bounds[2]) / 2;
+      const centerY = (bounds[1] + bounds[3]) / 2;
+      const deltaX = x - centerX;
+      const deltaY = y - centerY;
+      textFrame.position = [textFrame.position[0] + deltaX, textFrame.position[1] + deltaY];
+    } catch (e) {
+      // if bounds not available, keep initial position
+    }
   }
 
   const numberedCount = artboards.length - startFromIndex;

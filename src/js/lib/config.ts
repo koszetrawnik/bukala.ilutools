@@ -9,7 +9,7 @@ export type PaginationJustify = "left" | "center" | "right";
 
 // Domyślne ustawienia paginacji (do wczytania w UI/bridge)
 export const PAGINATION_SETTINGS = {
-  fontSize: 8,
+  fontSize: 10,
   fontFamily: "ArialMT",
   justify: "center" as PaginationJustify,
   position: "BC" as PaginationPosition,
