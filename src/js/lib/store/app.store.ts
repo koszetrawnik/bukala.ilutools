@@ -13,7 +13,7 @@ type AppState = {
 };
 
 export const useAppStore = create<AppState>((set) => ({
-  view: "home",
+  view: "pagination",
   setView: (view) => set({ view }),
 
   isBusy: false,

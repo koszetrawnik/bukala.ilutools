@@ -90,14 +90,13 @@ All ExtendScript functions are attached to `$[ns]` (where `ns` = extension ID fr
 **IMPORTANT:** Always split code into smaller, focused components:
 
 1. **Separation of concerns:**
-   - `src/js/lib/types.ts` - all TypeScript types
-   - `src/js/lib/config.ts` - configuration data and constants
+   - `src/js/lib/config.ts` - configuration data, constants, and types
    - `src/js/lib/store/` - Zustand stores
 
 2. **Component structure:**
    - `src/js/components/ui/` - reusable UI components (shadcn)
-   - `src/js/components/layout/` - layout components (AppTabs, etc.)
-   - `src/js/components/views/` - page/view components (HomeView, TextView, etc.)
+   - `src/js/components/layout/` - layout components (AppTabs, Footer, etc.)
+   - `src/js/components/views/` - page/view components (PaginationView, TextView, etc.)
 
 3. **Data-driven UI:**
    - Define data in `config.ts`, iterate in components
@@ -106,6 +105,12 @@ All ExtendScript functions are attached to `$[ns]` (where `ns` = extension ID fr
 4. **Keep main.tsx minimal:**
    - Only compose top-level layout components
    - No business logic or complex JSX
+
+5. **Always use shadcn/ui components:**
+   - Use existing shadcn components from `src/js/components/ui/`
+   - Install new shadcn components when needed: `npx shadcn@latest add [component]`
+   - Available: Button, Badge, Tabs, Switch, Separator
+   - Browse all: https://ui.shadcn.com/docs/components
 
 ## File Structure
 
