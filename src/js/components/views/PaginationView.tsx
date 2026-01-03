@@ -20,7 +20,7 @@ const POSITIONS: { code: PositionCode; label: string }[] = [
 export const PaginationView = () => {
   const [position, setPosition] = useState<PositionCode>("BC");
   const [marginMm, setMarginMm] = useState(3.5);
-  const [startFrom, setStartFrom] = useState(1);
+  const [startFrom, setStartFrom] = useState(0);
   const [artboards, setArtboards] = useState<ArtboardOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,12 +46,18 @@ export const PaginationView = () => {
   }, []);
 
   const handleInsertNumbers = async () => {
+    const safeStart = Math.max(
+      0,
+      Math.min(startFrom, Math.max(artboards.length - 1, 0))
+    );
+    const safeMargin = Number.isFinite(marginMm) ? marginMm : 0;
+
     setIsLoading(true);
     try {
       const result = await evalTS(
         "insertPageNumbers",
-        startFrom,
-        marginMm,
+        safeStart,
+        safeMargin,
         position
       );
       console.log(result);
@@ -69,42 +75,43 @@ export const PaginationView = () => {
   const hasArtboards = artboards.length > 0;
 
   return (
-    <div className="space-y-6 self-start text-left">
-      {/* Position Grid */}
-      <div className="space-y-2">
-        <Label>Position</Label>
-        <div className="grid grid-cols-3 gap-1 w-fit">
-          {POSITIONS.map((pos) => (
-            <button
-              key={pos.code}
-              onClick={() => setPosition(pos.code)}
-              className={`w-10 h-10 rounded border text-lg flex items-center justify-center transition-colors ${
-                position === pos.code
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-muted hover:bg-muted/80 border-border"
-              }`}
-            >
-              {pos.label}
-            </button>
-          ))}
+    <div className="space-y-2 self-start text-left">
+      {/* Position + Margin */}
+      <div className="flex flex-wrap gap-2">
+        <div className="space-y-2">
+          <Label>Position</Label>
+          <div className="grid grid-cols-3 gap-1 w-fit">
+            {POSITIONS.map((pos) => (
+              <button
+                key={pos.code}
+                onClick={() => setPosition(pos.code)}
+                className={`w-10 h-10 rounded border text-lg flex items-center justify-center transition-colors ${
+                  position === pos.code
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-muted hover:bg-muted/80 border-border"
+                }`}
+              >
+                {pos.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Margin Input */}
-      <div className="space-y-2">
-        <Label htmlFor="margin">Margin (mm)</Label>
-        <Input
-          id="margin"
-          type="number"
-          value={marginMm}
-          onChange={(e) => {
-            const nextValue = Number(e.target.value);
-            setMarginMm(Number.isNaN(nextValue) ? 0 : nextValue);
-          }}
-          min={0}
-          step={0.5}
-          className="w-24"
-        />
+        <div className="space-y-2 w-32">
+          <Label htmlFor="margin">Margin (mm)</Label>
+          <Input
+            id="margin"
+            type="number"
+            value={marginMm}
+            onChange={(e) => {
+              const nextValue = Number(e.target.value);
+              setMarginMm(Number.isNaN(nextValue) ? 0 : nextValue);
+            }}
+            min={0}
+            step={0.5}
+            className="w-full"
+          />
+        </div>
       </div>
 
       {/* Start From Select */}

@@ -101,7 +101,6 @@ export const insertPageNumbers = (
     // Calculate position
     let x: number;
     let y: number;
-    let justification: Justification;
 
     // Parse position code
     const vPos = positionCode.charAt(0); // T or B
@@ -110,14 +109,11 @@ export const insertPageNumbers = (
     // Horizontal position and justification
     if (hPos === "L") {
       x = left + marginPoints;
-      justification = Justification.LEFT;
     } else if (hPos === "C") {
       x = left + width / 2;
-      justification = Justification.CENTER;
     } else {
       // R
       x = right - marginPoints;
-      justification = Justification.RIGHT;
     }
 
     // Vertical position
@@ -126,6 +122,16 @@ export const insertPageNumbers = (
     } else {
       // B
       y = bottom + marginPoints + fontSize;
+    }
+
+    // Justification based on horizontal position
+    let justification: Justification;
+    if (hPos === "L") {
+      justification = Justification.LEFT;
+    } else if (hPos === "R") {
+      justification = Justification.RIGHT;
+    } else {
+      justification = Justification.CENTER;
     }
 
     // Create text frame

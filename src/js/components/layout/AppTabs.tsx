@@ -23,7 +23,7 @@ export const AppTabs = () => {
           <TabsContent
             key={tab.id}
             value={tab.id}
-            className="mt-8 w-full text-center"
+            className=" w-full text-center"
           >
             <ViewComponent />
           </TabsContent>
