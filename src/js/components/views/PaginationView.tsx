@@ -60,7 +60,7 @@ export const PaginationView = () => {
         safeStart,
         safeMargin,
         position,
-        PAGINATION_SETTINGS.justify
+        PAGINATION_SETTINGS.fontSize
       );
       console.log(result);
     } catch (e) {

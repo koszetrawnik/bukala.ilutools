@@ -62,7 +62,7 @@ export const insertPageNumbers = (
   startFromIndex: number,
   marginMm: number,
   positionCode: string,
-  alignInput?: string
+  fontSizeInput?: number
 ): { success: boolean; message: string } => {
   if (app.documents.length === 0) {
     return { success: false, message: "No document open" };
@@ -70,7 +70,10 @@ export const insertPageNumbers = (
 
   const doc = app.activeDocument;
   const artboards = doc.artboards;
-  const fontSize = 8;
+  const fontSize =
+    typeof fontSizeInput === "number" && !isNaN(fontSizeInput)
+      ? fontSizeInput
+      : 8;
   const marginPoints = mmToPoints(isNaN(marginMm) ? 0 : marginMm);
   const paginationLayer = recreatePaginationLayer(doc);
 
