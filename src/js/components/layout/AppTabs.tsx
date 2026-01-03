@@ -20,7 +20,11 @@ export const AppTabs = () => {
       {TABS_CONFIG.map((tab) => {
         const ViewComponent = tab.component;
         return (
-          <TabsContent key={tab.id} value={tab.id} className="mt-3">
+          <TabsContent
+            key={tab.id}
+            value={tab.id}
+            className="mt-8 w-full text-center"
+          >
             <ViewComponent />
           </TabsContent>
         );
