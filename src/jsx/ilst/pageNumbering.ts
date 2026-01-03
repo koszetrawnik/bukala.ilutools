@@ -106,7 +106,7 @@ export const insertPageNumbers = (
     const vPos = positionCode.charAt(0); // T or B
     const hPos = positionCode.charAt(1); // L, C, or R
 
-    // Horizontal position and justification
+    // Horizontal position (initially from position code)
     if (hPos === "L") {
       x = left + marginPoints;
     } else if (hPos === "C") {
