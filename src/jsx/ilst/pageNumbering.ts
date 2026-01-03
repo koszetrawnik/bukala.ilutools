@@ -150,6 +150,7 @@ export const insertPageNumbers = (
 
     // Position the text frame
     textFrame.position = [x, y];
+
   }
 
   const numberedCount = artboards.length - startFromIndex;
