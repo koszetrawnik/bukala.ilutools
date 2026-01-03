@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ViewId } from "@/lib/types";
+import { ViewId } from "@/lib/config";
 
 type AppState = {
   view: ViewId;

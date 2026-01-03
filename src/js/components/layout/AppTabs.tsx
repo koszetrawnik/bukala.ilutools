@@ -1,6 +1,6 @@
 import { useAppStore } from "@/lib/store/app.store";
 import { TABS_CONFIG } from "@/lib/config";
-import { ViewId } from "@/lib/types";
+import { ViewId } from "@/lib/config";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const AppTabs = () => {
