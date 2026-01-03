@@ -61,7 +61,8 @@ export const getArtboards = (): ArtboardInfo[] => {
 export const insertPageNumbers = (
   startFromIndex: number,
   marginMm: number,
-  positionCode: string
+  positionCode: string,
+  alignInput?: string
 ): { success: boolean; message: string } => {
   if (app.documents.length === 0) {
     return { success: false, message: "No document open" };
@@ -106,7 +107,7 @@ export const insertPageNumbers = (
     const vPos = positionCode.charAt(0); // T or B
     const hPos = positionCode.charAt(1); // L, C, or R
 
-    // Horizontal position (initially from position code)
+    // Horizontal position defaults from position code (may be overridden by align)
     if (hPos === "L") {
       x = left + marginPoints;
     } else if (hPos === "C") {
@@ -121,18 +122,11 @@ export const insertPageNumbers = (
       y = top - marginPoints;
     } else {
       // B
-      y = bottom + marginPoints + fontSize;
+      y = bottom + marginPoints;
     }
 
-    // Justification based on horizontal position
-    let justification: Justification;
-    if (hPos === "L") {
-      justification = Justification.LEFT;
-    } else if (hPos === "R") {
-      justification = Justification.RIGHT;
-    } else {
-      justification = Justification.CENTER;
-    }
+    // Justification fixed to center; X stays from position code
+    const justification: Justification = Justification.CENTER;
 
     // Create text frame
     const textFrame = paginationLayer.textFrames.add();
@@ -156,7 +150,6 @@ export const insertPageNumbers = (
 
     // Position the text frame
     textFrame.position = [x, y];
-
   }
 
   const numberedCount = artboards.length - startFromIndex;

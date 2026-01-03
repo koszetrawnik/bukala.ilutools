@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SimpleSelect } from "@/components/ui/simple-select";
 import { evalTS } from "@/lib/utils/bolt";
+import { PAGINATION_SETTINGS } from "@/lib/config";
 
 type PositionCode = "TL" | "TC" | "TR" | "BL" | "BC" | "BR";
 type ArtboardOption = { index: number; name: string };
@@ -58,7 +59,8 @@ export const PaginationView = () => {
         "insertPageNumbers",
         safeStart,
         safeMargin,
-        position
+        position,
+        PAGINATION_SETTINGS.justify
       );
       console.log(result);
     } catch (e) {
