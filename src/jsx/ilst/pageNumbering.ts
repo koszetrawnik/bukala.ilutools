@@ -62,7 +62,9 @@ export const insertPageNumbers = (
   startFromIndex: number,
   marginMm: number,
   positionCode: string,
-  fontSizeInput?: number
+  fontSizeInput?: number,
+  fontFamilyInput?: string,
+  justifyInput?: string
 ): { success: boolean; message: string } => {
   if (app.documents.length === 0) {
     return { success: false, message: "No document open" };
@@ -81,10 +83,11 @@ export const insertPageNumbers = (
     return { success: false, message: "Invalid start artboard" };
   }
 
-  // Try to get Arial font, fallback to first available
+  // Try to get specified font, fallback to first available
+  const fontFamily = fontFamilyInput || "ArialMT";
   let textFont: TextFont;
   try {
-    textFont = app.textFonts.getByName("ArialMT");
+    textFont = app.textFonts.getByName(fontFamily);
   } catch (e) {
     textFont = app.textFonts[0];
   }
@@ -128,8 +131,18 @@ export const insertPageNumbers = (
       y = bottom + marginPoints;
     }
 
-    // Justification fixed to center; X stays from position code
-    const justification: Justification = Justification.CENTER;
+    // Map justify input to Justification enum
+    let justification: Justification;
+    switch (justifyInput) {
+      case "left":
+        justification = Justification.LEFT;
+        break;
+      case "right":
+        justification = Justification.RIGHT;
+        break;
+      default:
+        justification = Justification.CENTER;
+    }
 
     // Create text frame
     const textFrame = paginationLayer.textFrames.add();
@@ -159,7 +172,10 @@ export const insertPageNumbers = (
       const centerY = (bounds[1] + bounds[3]) / 2;
       const deltaX = x - centerX;
       const deltaY = y - centerY;
-      textFrame.position = [textFrame.position[0] + deltaX, textFrame.position[1] + deltaY];
+      textFrame.position = [
+        textFrame.position[0] + deltaX,
+        textFrame.position[1] + deltaY,
+      ];
     } catch (e) {
       // if bounds not available, keep initial position
     }

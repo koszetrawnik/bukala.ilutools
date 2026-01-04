@@ -19,8 +19,8 @@ const POSITIONS: { code: PositionCode; label: string }[] = [
 ];
 
 export const PaginationView = () => {
-  const [position, setPosition] = useState<PositionCode>("BC");
-  const [marginMm, setMarginMm] = useState(3.5);
+  const [position, setPosition] = useState<PositionCode>(PAGINATION_SETTINGS.position);
+  const [marginMm, setMarginMm] = useState(PAGINATION_SETTINGS.margin);
   const [startFrom, setStartFrom] = useState(0);
   const [artboards, setArtboards] = useState<ArtboardOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +60,9 @@ export const PaginationView = () => {
         safeStart,
         safeMargin,
         position,
-        PAGINATION_SETTINGS.fontSize
+        PAGINATION_SETTINGS.fontSize,
+        PAGINATION_SETTINGS.fontFamily,
+        PAGINATION_SETTINGS.justify
       );
       console.log(result);
     } catch (e) {

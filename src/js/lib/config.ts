@@ -5,15 +5,16 @@ import { ArtView } from "@/components/views/ArtView";
 // Typy
 export type ViewId = "pagination" | "text" | "art";
 export type PaginationPosition = "TL" | "TC" | "TR" | "BL" | "BC" | "BR";
-export type PaginationJustify = "left" | "center" | "right";
 
 // Domyślne ustawienia paginacji (do wczytania w UI/bridge)
 export const PAGINATION_SETTINGS = {
-  fontSize: 10,
+  fontSize: 5,
   fontFamily: "ArialMT",
-  justify: "center" as PaginationJustify,
-  position: "BC" as PaginationPosition,
-  margin: 3.5, // mm
+  justify: "center" as "left" | "center" | "right",
+
+  //to  jest zmieniane w UI
+  position: "BL" as PaginationPosition,
+  margin: 4, // mm
 };
 
 // Konfiguracja
