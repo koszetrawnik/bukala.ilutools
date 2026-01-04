@@ -19,7 +19,9 @@ const POSITIONS: { code: PositionCode; label: string }[] = [
 ];
 
 export const PaginationView = () => {
-  const [position, setPosition] = useState<PositionCode>(PAGINATION_SETTINGS.position);
+  const [position, setPosition] = useState<PositionCode>(
+    PAGINATION_SETTINGS.position
+  );
   const [marginMm, setMarginMm] = useState(PAGINATION_SETTINGS.margin);
   const [startFrom, setStartFrom] = useState(0);
   const [artboards, setArtboards] = useState<ArtboardOption[]>([]);
@@ -62,7 +64,8 @@ export const PaginationView = () => {
         position,
         PAGINATION_SETTINGS.fontSize,
         PAGINATION_SETTINGS.fontFamily,
-        PAGINATION_SETTINGS.justify
+        PAGINATION_SETTINGS.justify,
+        PAGINATION_SETTINGS.paginationLayerName
       );
       console.log(result);
     } catch (e) {
@@ -79,9 +82,9 @@ export const PaginationView = () => {
   const hasArtboards = artboards.length > 0;
 
   return (
-    <div className="space-y-2 self-start text-left">
+    <div className="text-left mt-4">
       {/* Position + Margin */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-4 mt-4">
         <div className="space-y-2">
           <Label>Position</Label>
           <div className="grid grid-cols-3 gap-1 w-fit">
@@ -89,7 +92,7 @@ export const PaginationView = () => {
               <button
                 key={pos.code}
                 onClick={() => setPosition(pos.code)}
-                className={`w-10 h-10 rounded border text-lg flex items-center justify-center transition-colors ${
+                className={`w-8 h-8 rounded border text-lg flex items-center justify-center transition-colors ${
                   position === pos.code
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-muted hover:bg-muted/80 border-border"
@@ -119,12 +122,12 @@ export const PaginationView = () => {
       </div>
 
       {/* Start From Select */}
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
+      <div className="mt-4">
+        <div className="flex gap-2 mb-2">
           <Label htmlFor="start-from">Start from</Label>
           <button
             onClick={handleRefreshArtboards}
-            className="text-xs text-muted-foreground hover:text-foreground"
+            className=" text-xs text-muted-foreground hover:text-foreground"
           >
             ↻ refresh
           </button>
@@ -146,13 +149,15 @@ export const PaginationView = () => {
       </div>
 
       {/* Insert Button */}
-      <Button
-        onClick={handleInsertNumbers}
-        disabled={isLoading || !hasArtboards}
-        className="w-full"
-      >
-        {isLoading ? "Inserting..." : "Insert Page Numbers"}
-      </Button>
+      <div className="mt-6">
+        <Button
+          onClick={handleInsertNumbers}
+          disabled={isLoading || !hasArtboards}
+          className="w-full"
+        >
+          {isLoading ? "Inserting..." : "Insert Page Numbers"}
+        </Button>
+      </div>
     </div>
   );
 };

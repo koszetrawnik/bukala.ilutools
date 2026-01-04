@@ -6,14 +6,13 @@
 type PositionCode = "TL" | "TC" | "TR" | "BL" | "BC" | "BR";
 type ArtboardInfo = { index: number; name: string };
 
-const PAGINATION_LAYER_NAME = "__PAGINATION__";
 const POINTS_PER_MM = 72 / 25.4;
 
 const mmToPoints = (mm: number): number => mm * POINTS_PER_MM;
 
-const recreatePaginationLayer = (doc: Document): Layer => {
+const recreatePaginationLayer = (doc: Document, layerName: string): Layer => {
   try {
-    const existing = doc.layers.getByName(PAGINATION_LAYER_NAME);
+    const existing = doc.layers.getByName(layerName);
     existing.locked = false;
     existing.visible = true;
     existing.remove();
@@ -22,7 +21,7 @@ const recreatePaginationLayer = (doc: Document): Layer => {
   }
 
   const layer = doc.layers.add();
-  layer.name = PAGINATION_LAYER_NAME;
+  layer.name = layerName;
   layer.locked = false;
   layer.visible = true;
   return layer;
@@ -64,7 +63,8 @@ export const insertPageNumbers = (
   positionCode: string,
   fontSizeInput?: number,
   fontFamilyInput?: string,
-  justifyInput?: string
+  justifyInput?: string,
+  paginationLayerNameInput?: string
 ): { success: boolean; message: string } => {
   if (app.documents.length === 0) {
     return { success: false, message: "No document open" };
@@ -77,7 +77,8 @@ export const insertPageNumbers = (
       ? fontSizeInput
       : 8;
   const marginPoints = mmToPoints(isNaN(marginMm) ? 0 : marginMm);
-  const paginationLayer = recreatePaginationLayer(doc);
+  const layerName = paginationLayerNameInput || "__PAGINATION__";
+  const paginationLayer = recreatePaginationLayer(doc, layerName);
 
   if (startFromIndex < 0 || startFromIndex >= artboards.length) {
     return { success: false, message: "Invalid start artboard" };

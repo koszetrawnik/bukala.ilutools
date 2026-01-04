@@ -8,7 +8,8 @@ export type PaginationPosition = "TL" | "TC" | "TR" | "BL" | "BC" | "BR";
 
 // Domyślne ustawienia paginacji (do wczytania w UI/bridge)
 export const PAGINATION_SETTINGS = {
-  fontSize: 5,
+  paginationLayerName: "#PAGINATION",
+  fontSize: 8,
   fontFamily: "ArialMT",
   justify: "center" as "left" | "center" | "right",
 
