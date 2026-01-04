@@ -165,14 +165,36 @@ export const insertPageNumbers = (
     // Set justification
     textRange.paragraphAttributes.justification = justification;
 
-    // Position the text frame: align its bounding-box center to target (x,y)
+    // Position the text frame: align edge to target (x,y) based on position code
     textFrame.position = [x, y];
     try {
-      const bounds = textFrame.visibleBounds; // [x1, y1, x2, y2]
-      const centerX = (bounds[0] + bounds[2]) / 2;
-      const centerY = (bounds[1] + bounds[3]) / 2;
-      const deltaX = x - centerX;
-      const deltaY = y - centerY;
+      const bounds = textFrame.visibleBounds; // [left, top, right, bottom]
+      const frameLeft = bounds[0];
+      const frameTop = bounds[1];
+      const frameRight = bounds[2];
+      const frameBottom = bounds[3];
+      const frameCenterX = (frameLeft + frameRight) / 2;
+
+      // Horizontal anchor based on position
+      let anchorX: number;
+      if (hPos === "L") {
+        anchorX = frameLeft; // align left edge
+      } else if (hPos === "R") {
+        anchorX = frameRight; // align right edge
+      } else {
+        anchorX = frameCenterX; // align center
+      }
+
+      // Vertical anchor based on position
+      let anchorY: number;
+      if (vPos === "T") {
+        anchorY = frameTop; // align top edge
+      } else {
+        anchorY = frameBottom; // align bottom edge
+      }
+
+      const deltaX = x - anchorX;
+      const deltaY = y - anchorY;
       textFrame.position = [
         textFrame.position[0] + deltaX,
         textFrame.position[1] + deltaY,
