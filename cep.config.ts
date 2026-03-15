@@ -3,8 +3,8 @@ import { version } from "./package.json";
 
 const config: CEP_Config = {
   version,
-  id: "com.bolt.ilu",
-  displayName: "bolt.ilu",
+  id: "com.bukala.ilutools",
+  displayName: "bukala.ilutools",
   symlink: "local",
   port: 3000,
   servePort: 5000,
@@ -26,7 +26,7 @@ const config: CEP_Config = {
     {
       mainPath: "./main/index.html",
       name: "main",
-      panelDisplayName: "bolt.ilu",
+      panelDisplayName: "bukala.ilutools",
       autoVisible: true,
       width: 320,
       height: 540,
